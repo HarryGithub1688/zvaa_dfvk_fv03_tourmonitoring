@@ -1,0 +1,196 @@
+{
+  "_version": "1.42.0",
+  "sap.app": {
+    "id": "hab.zvaadfvk00007",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.15.2",
+      "toolsId": "0ccf5e42-d1cb-4fa3-96cc-8b2e0e6c272f"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zsb_vaa_dfvk_ui_fv03_o4/srvd/sap/zsd_vaa_dfvk_ui_fv03/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.102.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "hab.zvaadfvk00007.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "TourMonitorList",
+          "target": "TourMonitorList"
+        },
+        {
+          "pattern": "TourMonitor({key}):?query:",
+          "name": "TourMonitorObjectPage",
+          "target": "TourMonitorObjectPage"
+        },
+        {
+          "pattern": "TourMonitor({key})/_CustomersTour({key2}):?query:",
+          "name": "TourMonitorCustomerObjectPage",
+          "target": "TourMonitorCustomerObjectPage"
+        },
+        {
+          "name": "TourMonitor__TourMessageObjectPage",
+          "pattern": "TourMonitor({key})/_TourMessage({_TourMessageKey}):?query:",
+          "target": "TourMonitor__TourMessageObjectPage"
+        }
+      ],
+      "targets": {
+        "TourMonitorList": {
+          "type": "Component",
+          "id": "TourMonitorList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/TourMonitor",
+              "variantManagement": "Page",
+              "navigation": {
+                "TourMonitor": {
+                  "detail": {
+                    "route": "TourMonitorObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "TourMonitorObjectPage": {
+          "type": "Component",
+          "id": "TourMonitorObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/TourMonitor",
+              "navigation": {
+                "_CustomersTour": {
+                  "detail": {
+                    "route": "TourMonitorCustomerObjectPage"
+                  }
+                },
+                "_TourMessage": {
+                  "detail": {
+                    "route": "TourMonitor__TourMessageObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "TourMonitorCustomerObjectPage": {
+          "type": "Component",
+          "id": "TourMonitorCustomerObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/TourMonitor/_CustomersTour"
+            }
+          }
+        },
+        "TourMonitor__TourMessageObjectPage": {
+          "type": "Component",
+          "id": "TourMonitor__TourMessageObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/TourMonitor/_TourMessage"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
