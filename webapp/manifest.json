@@ -59,7 +59,8 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.fe.templates": {}
+        "sap.fe.templates": {},
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -92,27 +93,46 @@
       "css": []
     },
     "routing": {
-      "config": {},
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsBeginExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
       "routes": [
         {
           "pattern": ":?query:",
           "name": "TourMonitorList",
-          "target": "TourMonitorList"
+          "target": [
+            "TourMonitorList"
+          ]
         },
         {
           "pattern": "TourMonitor({key}):?query:",
           "name": "TourMonitorObjectPage",
-          "target": "TourMonitorObjectPage"
+          "target": [
+            "TourMonitorList",
+            "TourMonitorObjectPage"
+          ]
         },
         {
           "pattern": "TourMonitor({key})/_CustomersTour({key2}):?query:",
           "name": "TourMonitorCustomerObjectPage",
-          "target": "TourMonitorCustomerObjectPage"
+          "target": [
+            "TourMonitorList",
+            "TourMonitorObjectPage",
+            "TourMonitorCustomerObjectPage"
+          ]
         },
         {
           "name": "TourMonitor__TourMessageObjectPage",
           "pattern": "TourMonitor({key})/_TourMessage({_TourMessageKey}):?query:",
-          "target": "TourMonitor__TourMessageObjectPage"
+          "target": [
+            "TourMonitorList",
+            "TourMonitorObjectPage",
+            "TourMonitor__TourMessageObjectPage"
+          ]
         }
       ],
       "targets": {
@@ -139,7 +159,9 @@
                 }
               }
             }
-          }
+          },
+          "controlAggregation": "beginColumnPages",
+          "contextPattern": ""
         },
         "TourMonitorObjectPage": {
           "type": "Component",
@@ -162,7 +184,9 @@
                 }
               }
             }
-          }
+          },
+          "controlAggregation": "midColumnPages",
+          "contextPattern": "/TourMonitor({key})"
         },
         "TourMonitorCustomerObjectPage": {
           "type": "Component",
@@ -173,7 +197,9 @@
               "editableHeaderContent": false,
               "contextPath": "/TourMonitor/_CustomersTour"
             }
-          }
+          },
+          "controlAggregation": "endColumnPages",
+          "contextPattern": "/TourMonitor({key})/_CustomersTour({key2})"
         },
         "TourMonitor__TourMessageObjectPage": {
           "type": "Component",
@@ -184,9 +210,17 @@
               "navigation": {},
               "contextPath": "/TourMonitor/_TourMessage"
             }
-          }
+          },
+          "controlAggregation": "endColumnPages",
+          "contextPattern": "/TourMonitor({key})/_TourMessage({_TourMessageKey})"
         }
       }
+    },
+    "rootView": {
+      "viewName": "sap.fe.templates.RootContainer.view.Fcl",
+      "type": "XML",
+      "async": true,
+      "id": "appRootView"
     }
   },
   "sap.fiori": {
