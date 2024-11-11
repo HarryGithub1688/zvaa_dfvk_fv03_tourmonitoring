@@ -1,0 +1,4 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+        <DatePicker id="CustomDeliveryDateFilterId" value="{path: 'filterValues>', type: 'sap.fe.macros.filter.type.Value', formatOptions: {operator: 'hab.zvaadfvk00007.ext.customDeliveryDateFilterController.CustomDeliveryDateFilterController.CustomDeliveryDateFilterFun'}}">
+        </DatePicker>
+</core:FragmentDefinition>

@@ -68,12 +68,6 @@
       "cozy": true
     },
     "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "hab.zvaadfvk00007.i18n.i18n"
-        }
-      },
       "": {
         "dataSource": "mainService",
         "preload": true,
@@ -84,9 +78,28 @@
           "earlyRequests": true
         }
       },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "hab.zvaadfvk00007.i18n.i18n"
+        }
+      },
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "uri": "i18n/i18n.properties"
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "hab.zvaadfvk00007.ext.controller.ListReportExt"
+          },
+          "sap.fe.template.ObjectPage.ObjectPageController": {
+            "controllerName": "hab.zvaadfvk00007.ext.controller.ObjectPageExt"
+          }
+        },
+        "sap.ui.viewExtensions": {}
       }
     },
     "resources": {
@@ -156,6 +169,20 @@
                   "tableSettings": {
                     "type": "ResponsiveTable"
                   }
+                },
+                "@com.sap.vocabularies.UI.v1.SelectionFields": {
+                  "useSemanticDateRange": true,
+                  "filterFields": {
+                    "CustomDeliveryDateFilterController": {
+                      "label": "{i18n>deliveryDate}",
+                      "property": "DeliveryDate",
+                      "template": "hab.zvaadfvk00007.ext.customDeliveryDateFilterController.CustomDeliveryDateFilter",
+                      "required": false,
+                      "position": {
+                        "placement": 10
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -171,18 +198,7 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/TourMonitor",
-              "navigation": {
-                "_CustomersTour": {
-                  "detail": {
-                    "route": "TourMonitorCustomerObjectPage"
-                  }
-                },
-                "_TourMessage": {
-                  "detail": {
-                    "route": "TourMonitor__TourMessageObjectPage"
-                  }
-                }
-              }
+              "navigation": {}
             }
           },
           "controlAggregation": "midColumnPages",
