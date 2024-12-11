@@ -5,7 +5,12 @@ sap.ui.define([], function () {
 			this.newFilterDate();
 		},
 		
-		onAfterRendering: function () {
+		onAfterRendering: async function () {
+			//data test
+			/* debugger
+			var oModel = this.getView().getModel();
+			var entity = "/TourMonitor(TourId='1102',DeliveryDate=2024-12-10)/_CustomersTours";
+			var resultModel = await oModel.bindContext(entity).requestObject(); */
 		},
 
 		newFilterDate: function () {

@@ -95,7 +95,7 @@
           "sap.fe.templates.ListReport.ListReportController": {
             "controllerName": "hab.zvaadfvk00007.ext.controller.ListReportExt"
           },
-          "sap.fe.template.ObjectPage.ObjectPageController": {
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
             "controllerName": "hab.zvaadfvk00007.ext.controller.ObjectPageExt"
           }
         },

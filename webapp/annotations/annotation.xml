@@ -31,6 +31,48 @@
 
             </Annotations>
 
+            <!-- object page default sort --> <!-- not working -->
+            <!-- <Annotations Target="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorCustomerType">
+                <Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant">
+                    <Record>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="anfnr"/>
+                                    <PropertyValue Property="Ascending" Bool="true"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations> -->
+
+            <!-- object page default sort --> <!-- not working -->
+            <!-- <Annotations Target="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorMessageType">
+                <Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant">
+                    <Record>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="anfnr"/>
+                                    <PropertyValue Property="Ascending" Bool="true"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations> -->
+
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
