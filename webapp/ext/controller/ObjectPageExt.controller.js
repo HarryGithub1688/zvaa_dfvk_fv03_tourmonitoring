@@ -10,11 +10,11 @@ sap.ui.define([], function () {
 
 		sortTables: function () {
 			//var customersToursTable = this.getView().byId("fe::table::_CustomersTours::LineItem");
-			var tourMessagesTable = this.getView().byId("fe::table::_TourMessages::LineItem");
+			//var tourMessagesTable = this.getView().byId("fe::table::_TourMessages::LineItem");
 			var tourStopTable = this.getView().byId("fe::table::_TourStop::LineItem");
 
 			//customersToursTable.setSortConditions({sorters: [{name: 'anfnr', descending: false}]});
-			tourMessagesTable.setSortConditions({sorters: [{name: 'anfnr', descending: false}]});
+			//tourMessagesTable.setSortConditions({sorters: [{name: 'anfnr', descending: false}]});
 			tourStopTable.setSortConditions({sorters: [{name: 'anfnr', descending: false}]});
 		}
 		
