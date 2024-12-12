@@ -54,6 +54,7 @@
                 <Property Name="TourId" Type="Edm.String" Nullable="false" MaxLength="10"/>
                 <Property Name="Bez30" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="PlantId" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="plantName" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="MsgTitel" Type="Edm.String" Nullable="false" MaxLength="50"/>
                 <Property Name="MsgText" Type="Edm.String" Nullable="false"/>
                 <Property Name="ValidFrom" Type="Edm.Date"/>
@@ -62,6 +63,11 @@
                 <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
                 <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="read_user" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="read_date" Type="Edm.Date"/>
+                <Property Name="read_time" Type="Edm.TimeOfDay" Nullable="false"/>
+                <Property Name="status" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="statusText" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="headerTitle" Type="Edm.String" Nullable="false" MaxLength="50"/>
                 <Property Name="headerDescription" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
@@ -235,6 +241,8 @@
                 <Property Name="OrganizationBPName1" Type="Edm.String" Nullable="false" MaxLength="40"/>
                 <Property Name="MessageTitle" Type="Edm.String" Nullable="false" MaxLength="50"/>
                 <Property Name="MessageText" Type="Edm.String" Nullable="false"/>
+                <Property Name="plantId" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="plantName" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="ValidFrom" Type="Edm.Date"/>
                 <Property Name="ValidTo" Type="Edm.Date"/>
                 <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
@@ -261,18 +269,24 @@
                 </Key>
                 <Property Name="TourId" Type="Edm.String" Nullable="false" MaxLength="10"/>
                 <Property Name="DeliveryDate" Type="Edm.Date" Nullable="false"/>
-                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="FertigstellungP" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="Fertigstellung" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="Paletten" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="Kunststoffkisten" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Status" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="CompletionP" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="TotalCustomers" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Completion" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="palletIn" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="palletOut" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="palletDiff" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="boxesIn" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="boxesOut" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="boxesDiff" Type="Edm.Int16" Nullable="false"/>
                 <Property Name="TourName" Type="Edm.String" Nullable="false" MaxLength="30"/>
                 <Property Name="TourType" Type="Edm.String" Nullable="false" MaxLength="2"/>
                 <Property Name="PlantId" Type="Edm.String" Nullable="false" MaxLength="4"/>
                 <Property Name="TourInfo" Type="Edm.String" Nullable="false" MaxLength="43"/>
-                <Property Name="TourDiliveryInfo" Type="Edm.String" Nullable="false" MaxLength="19"/>
-                <NavigationProperty Name="_CustomersTour" Type="Collection(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorCustomerType)"/>
-                <NavigationProperty Name="_TourMessage" Type="Collection(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorMessageType)"/>
+                <Property Name="TourDeliveryInfo" Type="Edm.String" Nullable="false" MaxLength="22"/>
+                <Property Name="CompletionP_Category" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <NavigationProperty Name="_TourMessages" Type="Collection(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorMessageType)"/>
+                <NavigationProperty Name="_TourStop" Type="Collection(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourStopType)"/>
             </EntityType>
             <EntityType Name="I_DraftAdministrativeDataType">
                 <Key>
@@ -297,6 +311,26 @@
                 <Property Name="LastChangedByUserDescription" Type="Edm.String" Nullable="false" MaxLength="80"/>
                 <Property Name="InProcessByUserDescription" Type="Edm.String" Nullable="false" MaxLength="80"/>
             </EntityType>
+            <EntityType Name="TourStopType">
+                <Key>
+                    <PropertyRef Name="TourId"/>
+                    <PropertyRef Name="DeliveryDate"/>
+                    <PropertyRef Name="TourStop"/>
+                </Key>
+                <Property Name="TourId" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="DeliveryDate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="TourStop" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="inbound_boxen" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="outbound_boxen" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="final_boxen" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="inbound_pallet" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="outbound_pallet" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="final_pallet" Type="Edm.Int16" Nullable="false"/>
+                <Property Name="anfnr" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="status" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="statusCount" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="statusText" Type="Edm.String" Nullable="false" MaxLength="9"/>
+            </EntityType>
             <EntityType Name="TourMonitorMessageType">
                 <Key>
                     <PropertyRef Name="TourMsgUuid"/>
@@ -312,28 +346,9 @@
                 <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
                 <Property Name="read_date" Type="Edm.Date"/>
                 <Property Name="read_time" Type="Edm.TimeOfDay" Nullable="false"/>
+                <Property Name="formatted_read_date_time" Type="Edm.String" Nullable="false" MaxLength="20"/>
                 <Property Name="Status" Type="Edm.Byte" Nullable="false"/>
                 <Property Name="StatusName" Type="Edm.String" Nullable="false" MaxLength="9"/>
-            </EntityType>
-            <EntityType Name="TourMonitorCustomerType">
-                <Key>
-                    <PropertyRef Name="TourId"/>
-                    <PropertyRef Name="DeliveryDate"/>
-                    <PropertyRef Name="customerNo"/>
-                </Key>
-                <Property Name="TourId" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="DeliveryDate" Type="Edm.Date" Nullable="false"/>
-                <Property Name="customerNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="customer" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="NameOrg1" Type="Edm.String" Nullable="false" MaxLength="40"/>
-                <Property Name="NameOrg2" Type="Edm.String" Nullable="false" MaxLength="40"/>
-                <Property Name="Location1" Type="Edm.String" Nullable="false" MaxLength="7"/>
-                <Property Name="Location2" Type="Edm.String" Nullable="false" MaxLength="5"/>
-                <Property Name="Location3" Type="Edm.String" Nullable="false" MaxLength="1"/>
-                <Property Name="Paletten" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="Boxen" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="Erledigt2" Type="Edm.Byte" Nullable="false"/>
-                <Property Name="Erledigt" Type="Edm.String" Nullable="false" MaxLength="9"/>
             </EntityType>
             <ComplexType Name="TourMessageOperationControl">
                 <Property Name="Edit" Type="Edm.Boolean" Nullable="false"/>
@@ -402,6 +417,7 @@
             </Action>
             <Action Name="MoveToTarget" IsBound="true">
                 <Parameter Name="_it" Type="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.CustomerTourSourceType" Nullable="false"/>
+                <Parameter Name="STOP_ID" Type="Edm.String" Nullable="false" MaxLength="3"/>
             </Action>
             <Action Name="Prepare" IsBound="true">
                 <Parameter Name="_it" Type="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMessageType" Nullable="false"/>
@@ -447,11 +463,11 @@
                     <NavigationPropertyBinding Path="SiblingEntity" Target="TourMessage"/>
                 </EntitySet>
                 <EntitySet Name="TourMonitor" EntityType="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorType">
-                    <NavigationPropertyBinding Path="_CustomersTour" Target="TourMonitorCustomer"/>
-                    <NavigationPropertyBinding Path="_TourMessage" Target="TourMonitorMessage"/>
+                    <NavigationPropertyBinding Path="_TourMessages" Target="TourMonitorMessage"/>
+                    <NavigationPropertyBinding Path="_TourStop" Target="TourStop"/>
                 </EntitySet>
-                <EntitySet Name="TourMonitorCustomer" EntityType="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorCustomerType"/>
                 <EntitySet Name="TourMonitorMessage" EntityType="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourMonitorMessageType"/>
+                <EntitySet Name="TourStop" EntityType="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.TourStopType"/>
                 <EntitySet Name="UserTour" EntityType="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.UserTourType">
                     <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="UserTour"/>
@@ -481,11 +497,21 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Bezeichnung Länge 30"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMessageType/PlantId">
+                <Annotation Term="SAP__common.Text" Path="plantName"/>
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/i_plantstdvh/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_tour_msg.plantid'/$metadata</String>
+                    </Collection>
+                </Annotation>
                 <Annotation Term="SAP__common.Label" String="Plant"/>
                 <Annotation Term="SAP__common.Heading" String="Plnt"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/plantName">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Plant Name"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMessageType/MsgTitel">
                 <Annotation Term="SAP__common.FieldControl" EnumMember="SAP__common.FieldControlType/Mandatory"/>
@@ -529,6 +555,26 @@
                 <Annotation Term="SAP__core.Computed"/>
                 <Annotation Term="SAP__common.Label" String="Last Changed"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Change Time Stamp"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/read_user">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Lesender"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/read_date">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Lesedatum"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/read_time">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Lesezeit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/status">
+                <Annotation Term="SAP__common.Label" String="Status"/>
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMessageType/statusText">
+                <Annotation Term="SAP__core.Computed"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMessageType/headerTitle">
                 <Annotation Term="SAP__core.Computed"/>
@@ -623,6 +669,8 @@
                         </PropertyValue>
                         <PropertyValue Property="NonFilterableProperties">
                             <Collection>
+                                <PropertyPath>status</PropertyPath>
+                                <PropertyPath>statusText</PropertyPath>
                                 <PropertyPath>__EntityControl</PropertyPath>
                                 <PropertyPath>__OperationControl</PropertyPath>
                             </Collection>
@@ -634,6 +682,8 @@
                         <PropertyValue Property="NonSortableProperties">
                             <Collection>
                                 <PropertyPath>MsgText</PropertyPath>
+                                <PropertyPath>status</PropertyPath>
+                                <PropertyPath>statusText</PropertyPath>
                                 <PropertyPath>__EntityControl</PropertyPath>
                                 <PropertyPath>__OperationControl</PropertyPath>
                             </Collection>
@@ -696,6 +746,15 @@
                                 <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Value" Path="CreatedBy"/>
                                 </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="read_user"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="read_date"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="read_time"/>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -709,6 +768,9 @@
                                 </Record>
                                 <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Value" Path="ValidTo"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="PlantId"/>
                                 </Record>
                                 <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Value" Path="TourId"/>
@@ -759,6 +821,9 @@
                             <PropertyValue Property="Value" Path="MsgText"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PlantId"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="ValidFrom"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
@@ -774,12 +839,27 @@
                             <PropertyValue Property="Value" Path="LastChangedBy"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_user"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_date"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_time"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="LastChangedAt"/>
                         </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="SAP__UI.LineItem">
                     <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Status"/>
+                            <PropertyValue Property="Criticality" Path="status"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithIcon"/>
+                            <PropertyValue Property="Value" Path="statusText"/>
+                        </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="MsgTitel"/>
                         </Record>
@@ -790,6 +870,9 @@
                             <PropertyValue Property="Value" Path="MsgText"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PlantId"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="ValidFrom"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
@@ -805,6 +888,15 @@
                             <PropertyValue Property="Value" Path="LastChangedBy"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_user"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_date"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="read_time"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="LastChangedAt"/>
                         </Record>
                     </Collection>
@@ -812,11 +904,15 @@
                 <Annotation Term="SAP__UI.SelectionFields">
                     <Collection>
                         <PropertyPath>TourId</PropertyPath>
+                        <PropertyPath>PlantId</PropertyPath>
                         <PropertyPath>ValidFrom</PropertyPath>
                         <PropertyPath>ValidTo</PropertyPath>
                         <PropertyPath>CreatedBy</PropertyPath>
                         <PropertyPath>CreatedAt</PropertyPath>
                         <PropertyPath>LastChangedBy</PropertyPath>
+                        <PropertyPath>read_user</PropertyPath>
+                        <PropertyPath>read_date</PropertyPath>
+                        <PropertyPath>read_time</PropertyPath>
                         <PropertyPath>LastChangedAt</PropertyPath>
                     </Collection>
                 </Annotation>
@@ -947,12 +1043,22 @@
             <Annotations Target="SAP__self.CustomerTourMapType/SourceTourId">
                 <Annotation Term="SAP__common.Text" Path="SourceName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_tr_val_today/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_cust_tr_map.sourcetourid'/$metadata</String>
+                    </Collection>
+                </Annotation>
                 <Annotation Term="SAP__common.Label" String="Von Tour"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Tour"/>
             </Annotations>
             <Annotations Target="SAP__self.CustomerTourMapType/TargetTourId">
                 <Annotation Term="SAP__common.Text" Path="TargetName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_tr_val_today/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_cust_tr_map.targettourid'/$metadata</String>
+                    </Collection>
+                </Annotation>
                 <Annotation Term="SAP__common.Label" String="Nach Tour"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Tour"/>
             </Annotations>
@@ -1284,7 +1390,7 @@
                 <Annotation Term="SAP__UI.LineItem">
                     <Collection>
                         <Record Type="SAP__UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="MoveToSource"/>
+                            <PropertyValue Property="Label" String="Zur Ursprungs-Tour hinzufügen"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.MoveToSource(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.CustomersTourTargetType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
@@ -1317,7 +1423,7 @@
                 <Annotation Term="SAP__UI.StatusInfo" Qualifier="SI">
                     <Collection>
                         <Record Type="SAP__UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="MoveToSource"/>
+                            <PropertyValue Property="Label" String="Zur Ursprungs-Tour hinzufügen"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.MoveToSource(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.CustomersTourTargetType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
@@ -1958,7 +2064,7 @@
                 <Annotation Term="SAP__UI.LineItem">
                     <Collection>
                         <Record Type="SAP__UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="MoveToTarget"/>
+                            <PropertyValue Property="Label" String="Zur Ziel-Tour hinzufügen"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.MoveToTarget(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.CustomerTourSourceType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
                         </Record>
@@ -1998,7 +2104,7 @@
                 <Annotation Term="SAP__UI.StatusInfo" Qualifier="SI">
                     <Collection>
                         <Record Type="SAP__UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="MoveToTarget"/>
+                            <PropertyValue Property="Label" String="Zur Ziel-Tour hinzufügen"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.MoveToTarget(com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.CustomerTourSourceType)"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/ChangeSet"/>
                         </Record>
@@ -2017,7 +2123,7 @@
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.ValueListReferences">
                     <Collection>
-                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_cus_msg/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_cust_msg.customerid'/$metadata</String>
+                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_cust/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_cust_msg.customerid'/$metadata</String>
                     </Collection>
                 </Annotation>
                 <Annotation Term="SAP__common.Label" String="Kunde-/ Kundennummer"/>
@@ -2051,6 +2157,23 @@
                 <Annotation Term="SAP__UI.MultiLineText"/>
                 <Annotation Term="SAP__common.Label" String="Text"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Kundennachricht - Text"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CustomerMessageType/plantId">
+                <Annotation Term="SAP__common.Text" Path="plantName"/>
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/i_plantstdvh/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_cust_msg.plantid'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CustomerMessageType/plantName">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Plant Name"/>
             </Annotations>
             <Annotations Target="SAP__self.CustomerMessageType/ValidFrom">
                 <Annotation Term="SAP__common.FieldControl" EnumMember="SAP__common.FieldControlType/Mandatory"/>
@@ -2216,7 +2339,7 @@
                 <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/Edit"/>
             </Annotations>
             <Annotations Target="SAP__self.CustomerMessageType">
-                <Annotation Term="SAP__common.Label" String="DFVK - Kurznachrichten"/>
+                <Annotation Term="SAP__common.Label" String="DFVK - Kundennachricht"/>
                 <Annotation Term="SAP__UI.Facets">
                     <Collection>
                         <Record Type="SAP__UI.ReferenceFacet">
@@ -2264,6 +2387,9 @@
                                     <PropertyValue Property="Value" Path="ValidTo"/>
                                 </Record>
                                 <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="plantId"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
                                     <PropertyValue Property="Value" Path="CustomerId"/>
                                 </Record>
                             </Collection>
@@ -2286,7 +2412,7 @@
                 </Annotation>
                 <Annotation Term="SAP__UI.HeaderInfo">
                     <Record>
-                        <PropertyValue Property="TypeName" String="Kurznachricht"/>
+                        <PropertyValue Property="TypeName" String="Kundennachricht"/>
                         <PropertyValue Property="TypeNamePlural" String="Kundennachricht"/>
                         <PropertyValue Property="Title">
                             <Record Type="SAP__UI.DataField">
@@ -2310,6 +2436,9 @@
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="MessageText"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="plantId"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="ValidFrom"/>
@@ -2343,6 +2472,9 @@
                             <PropertyValue Property="Value" Path="MessageText"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="plantId"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="ValidFrom"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
@@ -2365,6 +2497,7 @@
                 <Annotation Term="SAP__UI.SelectionFields">
                     <Collection>
                         <PropertyPath>CustomerId</PropertyPath>
+                        <PropertyPath>plantId</PropertyPath>
                         <PropertyPath>ValidFrom</PropertyPath>
                         <PropertyPath>ValidTo</PropertyPath>
                         <PropertyPath>CreatedBy</PropertyPath>
@@ -2381,6 +2514,11 @@
             <Annotations Target="SAP__self.TourMonitorType/TourId">
                 <Annotation Term="SAP__common.Text" Path="TourName"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_tr_val_today/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_tour_monitor.tourid'/$metadata</String>
+                    </Collection>
+                </Annotation>
                 <Annotation Term="SAP__common.Label" String="Tour"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMonitorType/TourName">
@@ -2403,7 +2541,7 @@
                         <PropertyValue Property="RestrictedProperties">
                             <Collection>
                                 <Record>
-                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_CustomersTour"/>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_TourMessages"/>
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
                                             <PropertyValue Property="Insertable" Bool="false"/>
@@ -2411,7 +2549,7 @@
                                     </PropertyValue>
                                 </Record>
                                 <Record>
-                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_TourMessage"/>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_TourStop"/>
                                     <PropertyValue Property="InsertRestrictions">
                                         <Record>
                                             <PropertyValue Property="Insertable" Bool="false"/>
@@ -2472,15 +2610,26 @@
                     </Record>
                 </Annotation>
             </Annotations>
+            <Annotations Target="SAP__self.TourMonitorType/CompletionP_Category">
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zvi_vaa_dfvk_fv03_moni_fertig/0001;ps='srvd-zsd_vaa_dfvk_ui_fv03-0001';va='com.sap.gateway.srvd.zsd_vaa_dfvk_ui_fv03.v0001.et-zvc_vaa_dfvk_fv03_tour_monitor.completionp_category'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+                <Annotation Term="SAP__common.Label" String="Fertigstellung"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Beenden Sie die Auftragspräsentation"/>
+            </Annotations>
             <Annotations Target="SAP__self.TourMonitorType">
                 <Annotation Term="SAP__common.Label" String="Tour Monitor"/>
-                <Annotation Term="SAP__UI.DataPoint" Qualifier="Fertigstellung">
+                <Annotation Term="SAP__UI.DataPoint" Qualifier="Completion">
                     <Record>
-                        <PropertyValue Property="Value" Path="Fertigstellung"/>
-                        <PropertyValue Property="Title" String="Tour Monitor"/>
-                        <PropertyValue Property="TargetValue" Decimal="100"/>
+                        <PropertyValue Property="Value" Path="Completion"/>
+                        <PropertyValue Property="Title" String="Fertigstellung"/>
+                        <PropertyValue Property="TargetValue" Path="TotalCustomers"/>
                         <PropertyValue Property="Visualization" EnumMember="SAP__UI.VisualizationType/Progress"/>
                         <PropertyValue Property="Criticality" Path="Status"/>
+                        <PropertyValue Property="CriticalityLabels" AnnotationPath="Completion/@SAP__UI.CriticalityLabels"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="SAP__UI.Facets">
@@ -2488,19 +2637,28 @@
                         <Record Type="SAP__UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="Kunden"/>
                             <PropertyValue Property="ID" String="TourMonitorCustomer"/>
-                            <PropertyValue Property="Target" AnnotationPath="_CustomersTour/@SAP__UI.LineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="_TourStop/@SAP__UI.LineItem"/>
                         </Record>
                         <Record Type="SAP__UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="Nachrichten"/>
                             <PropertyValue Property="ID" String="TourMonitorMessage"/>
-                            <PropertyValue Property="Target" AnnotationPath="_TourMessage/@SAP__UI.LineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="_TourMessages/@SAP__UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Header"/>
+                            <PropertyValue Property="ID" String="Fertigstellung"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Completion"/>
                         </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="SAP__UI.HeaderInfo">
                     <Record>
-                        <PropertyValue Property="TypeName" String="Tour Monitor"/>
-                        <PropertyValue Property="TypeNamePlural" String="Tours Monitor"/>
+                        <PropertyValue Property="TypeName" String="Tour Monitorng"/>
+                        <PropertyValue Property="TypeNamePlural" String="Tours Monitoring"/>
                         <PropertyValue Property="Title">
                             <Record Type="SAP__UI.DataField">
                                 <PropertyValue Property="Value" Path="TourInfo"/>
@@ -2508,7 +2666,7 @@
                         </PropertyValue>
                         <PropertyValue Property="Description">
                             <Record Type="SAP__UI.DataField">
-                                <PropertyValue Property="Value" Path="TourDiliveryInfo"/>
+                                <PropertyValue Property="Value" Path="TourDeliveryInfo"/>
                             </Record>
                         </PropertyValue>
                     </Record>
@@ -2529,14 +2687,18 @@
                             <PropertyValue Property="Value" Path="TourId"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Lieferdatum"/>
+                            <PropertyValue Property="Value" Path="DeliveryDate"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Fertigstellung %"/>
                             <PropertyValue Property="Criticality" Path="Status"/>
                             <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithoutIcon"/>
-                            <PropertyValue Property="Value" Path="FertigstellungP"/>
+                            <PropertyValue Property="Value" Path="CompletionP"/>
                         </Record>
                         <Record Type="SAP__UI.DataFieldForAnnotation">
                             <PropertyValue Property="Label" String="Fertigstellung"/>
-                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Fertigstellung"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Completion"/>
                             <Annotation Term="SAP__HTML5.CssDefaults">
                                 <Record>
                                     <PropertyValue Property="width" String="35rem"/>
@@ -2544,16 +2706,28 @@
                             </Annotation>
                         </Record>
                         <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Paletten"/>
-                            <PropertyValue Property="Value" Path="Paletten"/>
+                            <PropertyValue Property="Label" String="Paletten (Eingang)"/>
+                            <PropertyValue Property="Value" Path="palletIn"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Kunststoffkisten"/>
-                            <PropertyValue Property="Value" Path="Kunststoffkisten"/>
+                            <PropertyValue Property="Label" String="Paletten (Ausgang)"/>
+                            <PropertyValue Property="Value" Path="palletOut"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Lieferdatum"/>
-                            <PropertyValue Property="Value" Path="DeliveryDate"/>
+                            <PropertyValue Property="Label" String="Paletten(Differenz)"/>
+                            <PropertyValue Property="Value" Path="palletDiff"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Eingang)"/>
+                            <PropertyValue Property="Value" Path="boxesIn"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Ausgang)"/>
+                            <PropertyValue Property="Value" Path="boxesOut"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Differenz)"/>
+                            <PropertyValue Property="Value" Path="boxesDiff"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Value" Path="PlantId"/>
@@ -2563,10 +2737,10 @@
                 </Annotation>
                 <Annotation Term="SAP__UI.SelectionFields">
                     <Collection>
-                        <PropertyPath>DeliveryDate</PropertyPath>
                         <PropertyPath>TourId</PropertyPath>
+                        <PropertyPath>DeliveryDate</PropertyPath>
                         <PropertyPath>PlantId</PropertyPath>
-                        <PropertyPath>Fertigstellung</PropertyPath>
+                        <PropertyPath>CompletionP_Category</PropertyPath>
                     </Collection>
                 </Annotation>
             </Annotations>
@@ -2667,6 +2841,127 @@
                     <Collection/>
                 </Annotation>
             </Annotations>
+            <Annotations Target="SAP__self.TourStopType/TourId">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Tour"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType/TourStop">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Tourstop-Id"/>
+                <Annotation Term="SAP__common.Heading" String="Id"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType/anfnr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Tourstop-Id"/>
+                <Annotation Term="SAP__common.Heading" String="Id"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType">
+                <Annotation Term="SAP__common.Label" String="Tour Monitor Kunden"/>
+                <Annotation Term="SAP__UI.Identification">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="TourStop"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="inbound_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="outbound_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="final_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="inbound_pallet"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="outbound_pallet"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="final_pallet"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Tour Stop"/>
+                            <PropertyValue Property="Value" Path="TourStop"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Eingang)"/>
+                            <PropertyValue Property="Value" Path="inbound_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Ausgang)"/>
+                            <PropertyValue Property="Value" Path="outbound_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kunststoffkisten (Differenz)"/>
+                            <PropertyValue Property="Value" Path="final_boxen"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Paletten (Eingang)"/>
+                            <PropertyValue Property="Value" Path="inbound_pallet"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Paletten (Ausgang)"/>
+                            <PropertyValue Property="Value" Path="outbound_pallet"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Paletten (Differenz)"/>
+                            <PropertyValue Property="Value" Path="final_pallet"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Status"/>
+                            <PropertyValue Property="Criticality" Path="status"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithIcon"/>
+                            <PropertyValue Property="Value" Path="statusText"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>TourStop</PropertyPath>
+                        <PropertyPath>inbound_boxen</PropertyPath>
+                        <PropertyPath>outbound_boxen</PropertyPath>
+                        <PropertyPath>final_boxen</PropertyPath>
+                        <PropertyPath>inbound_pallet</PropertyPath>
+                        <PropertyPath>outbound_pallet</PropertyPath>
+                        <PropertyPath>final_pallet</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/TourStop">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
             <Annotations Target="SAP__self.TourMonitorMessageType/TourId">
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.Label" String="Tour"/>
@@ -2694,12 +2989,8 @@
                             <PropertyValue Property="Value" Path="CreatedAt"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Gelesen Datum"/>
-                            <PropertyValue Property="Value" Path="read_date"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Gelesen Seit"/>
-                            <PropertyValue Property="Value" Path="read_time"/>
+                            <PropertyValue Property="Label" String="Gelesen"/>
+                            <PropertyValue Property="Value" Path="formatted_read_date_time"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Status"/>
@@ -2736,110 +3027,6 @@
                                 <PropertyPath>MsgText</PropertyPath>
                             </Collection>
                         </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilities.InsertRestrictions">
-                    <Record>
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilities.DeleteRestrictions">
-                    <Record>
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilities.UpdateRestrictions">
-                    <Record>
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                        <PropertyValue Property="QueryOptions">
-                            <Record>
-                                <PropertyValue Property="SelectSupported" Bool="true"/>
-                            </Record>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__core.OptimisticConcurrency">
-                    <Collection/>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/TourId">
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Tour"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/customerNo">
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Business Partner"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Business Partner Number"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/customer">
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Customer"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Customer Number"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/Location1">
-                <Annotation Term="SAP__common.IsDigitSequence"/>
-                <Annotation Term="SAP__common.Label" String="Int. location no. 1"/>
-                <Annotation Term="SAP__common.Heading" String="ILN 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="International location number  (part 1)"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/Location2">
-                <Annotation Term="SAP__common.IsDigitSequence"/>
-                <Annotation Term="SAP__common.Label" String="Int. location no. 2"/>
-                <Annotation Term="SAP__common.Heading" String="ILN 2"/>
-                <Annotation Term="SAP__common.QuickInfo" String="International location number (Part 2)"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/Location3">
-                <Annotation Term="SAP__common.IsDigitSequence"/>
-                <Annotation Term="SAP__common.Label" String="Check digit"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Check digit for the international location number"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType">
-                <Annotation Term="SAP__common.Label" String="Tour Monitor Kunden"/>
-                <Annotation Term="SAP__UI.Identification">
-                    <Collection>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Value" Path="NameOrg1"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Value" Path="Paletten"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Value" Path="Boxen"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
-                <Annotation Term="SAP__UI.LineItem">
-                    <Collection>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Kunnden"/>
-                            <PropertyValue Property="Value" Path="NameOrg1"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Value" Path="Paletten"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Value" Path="Boxen"/>
-                        </Record>
-                        <Record Type="SAP__UI.DataField">
-                            <PropertyValue Property="Label" String="Erledigt"/>
-                            <PropertyValue Property="Criticality" Path="Erledigt2"/>
-                            <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithIcon"/>
-                            <PropertyValue Property="Value" Path="Erledigt"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
-                <Annotation Term="SAP__UI.SelectionFields">
-                    <Collection>
-                        <PropertyPath>NameOrg1</PropertyPath>
-                        <PropertyPath>Paletten</PropertyPath>
-                        <PropertyPath>Boxen</PropertyPath>
-                    </Collection>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="SAP__self.Container/TourMonitorCustomer">
-                <Annotation Term="SAP__capabilities.SearchRestrictions">
-                    <Record>
-                        <PropertyValue Property="Searchable" Bool="false"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="SAP__capabilities.InsertRestrictions">
@@ -2935,6 +3122,32 @@
                 <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="Last Name"/>
             </Annotations>
+            <Annotations Target="SAP__self.TourMonitorType/Status">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMonitorType/TotalCustomers">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMonitorType/Completion">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMonitorMessageType/read_date">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Lesedatum"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMonitorMessageType/read_time">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Lesezeit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourMonitorMessageType/Status">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType/status">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType/statusCount">
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
             <Annotations Target="SAP__self.UserTourType/FirstName">
                 <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="First Name"/>
@@ -3004,13 +3217,17 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Middle name or second forename of a person"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMonitorType/DeliveryDate">
-                <Annotation Term="SAP__common.Label" String="Date"/>
+                <Annotation Term="SAP__common.Label" String="Lieferdatum"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Für Lieferdatum"/>
             </Annotations>
             <Annotations Target="SAP__self.I_DraftAdministrativeDataType/CreationDateTime">
                 <Annotation Term="SAP__common.Label" String="Draft Created On"/>
             </Annotations>
             <Annotations Target="SAP__self.I_DraftAdministrativeDataType/LastChangeDateTime">
                 <Annotation Term="SAP__common.Label" String="Draft Last Changed On"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TourStopType/DeliveryDate">
+                <Annotation Term="SAP__common.Label" String="Date"/>
             </Annotations>
             <Annotations Target="SAP__self.TourMonitorMessageType/TourMsgUuid">
                 <Annotation Term="SAP__common.Label" String="UUID"/>
@@ -3035,23 +3252,6 @@
             <Annotations Target="SAP__self.TourMonitorMessageType/CreatedAt">
                 <Annotation Term="SAP__common.Label" String="Created On"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Creation Date Time"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorMessageType/read_date">
-                <Annotation Term="SAP__common.Label" String="Lesedatum"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorMessageType/read_time">
-                <Annotation Term="SAP__common.Label" String="Lesezeit"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/DeliveryDate">
-                <Annotation Term="SAP__common.Label" String="Date"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/NameOrg1">
-                <Annotation Term="SAP__common.Label" String="Name 1"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Name 1 of organization"/>
-            </Annotations>
-            <Annotations Target="SAP__self.TourMonitorCustomerType/NameOrg2">
-                <Annotation Term="SAP__common.Label" String="Name 2"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Name 2 of organization"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

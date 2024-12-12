@@ -10,6 +10,7 @@ sap.ui.define([], function () {
 			/* debugger
 			var oModel = this.getView().getModel();
 			var entity = "/TourMonitor(TourId='1102',DeliveryDate=2024-12-10)/_CustomersTours";
+			var entity = "/TourStop";
 			var resultModel = await oModel.bindContext(entity).requestObject(); */
 		},
 
